@@ -1,0 +1,48 @@
+<p-dialog [(visible)]="visible" styleClass="book-edit p-fluid" [style]="{width: '450px'}"
+  header="{{addBook ? 'Add Book' : 'Edit Book'}}" [modal]="true" (onHide)="hideDialog()">
+
+  <ng-template pTemplate="content">
+    <div class="field mb-3">
+      <label class="mb-2 fs-16 fm" for="name">Name</label>
+      <input type="text" pInputText id="name" [(ngModel)]="newBook.name" required autofocus />
+      <div class="mt-2">
+        <small class="p-error fs-14 mt-3" *ngIf="submitted && !newBook.name">Name is required.</small>
+      </div>
+    </div>
+
+    <div class="field mb-3">
+      <label class="mb-2 fs-16 fm" for="authors">Authors <span class="fs-14 fm ms-2">(Between commas)</span></label>
+      <input type="text" pInputText id="authors" [(ngModel)]="newBook.authors" required autofocus />
+      <div class="mt-2">
+        <small class="p-error fs-14 mt-3" *ngIf="submitted && !newBook.authors">Authors is required.</small>
+      </div>
+    </div>
+    <div class="field mb-3">
+      <label class="mb-2 fs-16 fm" for="year">Year</label>
+      <input type="number" id="year" inputId="year" [(ngModel)]="newBook.year" pInputText [max]="2022" required
+        autofocus />
+      <div class="mt-2">
+        <small class="p-error fs-14 mt-3" *ngIf="submitted && newBook.year == null">Year is required.</small>
+        <small class="p-error fs-14 mt-3" *ngIf="aboveYear(newBook.year)">No way, unless you have traveled to
+          the future</small>
+      </div>
+
+    </div>
+    <div class="field mb-3">
+      <label class="mb-2 fs-16 fm" for="summary">Summary</label>
+      <textarea type="text" pInputTextarea id="summary" [(ngModel)]="newBook.summary" required autofocus></textarea>
+      <div class="mt-2">
+        <small class="p-error fs-14 mt-3 fm" *ngIf="submitted && !newBook.summary">Summary is required.</small>
+      </div>
+
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple [disabled]="submitted" label="Cancel" icon="pi pi-times" class="p-button-text"
+      (click)="hideDialog()"></button>
+    <button pButton pRipple [disabled]="submitted" label="{{addBook ? 'Add' : 'Update'}}"
+      icon="{{submitted ? 'pi pi-spin pi-spinner' : 'pi pi-check'}}" class="p-button-text"
+      (click)="saveBook()"></button>
+  </ng-template>
+</p-dialog>

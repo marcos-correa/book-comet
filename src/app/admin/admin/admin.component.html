@@ -1,0 +1,23 @@
+<navbar></navbar>
+<div class="row">
+  <div class="col-8 offset-2">
+    <book-search 
+      [admin]="true"
+      [loading]="this.loading"
+      (refresh_)="getAllBooks()"
+      (books_)="setBooksFiltered($event)"
+      (query_)="setQueryName($event)" 
+      (loading_)="setLoading($event)"
+    ></book-search>
+
+    <book-list 
+      [books]="getBooksToShow()" 
+      [loading]="this.loading" 
+      [error]="this.error" 
+      [queryName]="this.queryName" 
+      [admin]="true" 
+      [search]="true"
+      (refresh_)="this.getAllBooks()"
+    ></book-list>
+  </div>
+</div>

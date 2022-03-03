@@ -1,0 +1,27 @@
+<book-form *ngIf="!loading" [visible]="isAddBook" [addBook]="true" (added)="bookAdded($event)" (onHide)="this.hideAddBook()"></book-form>
+<div class="row mb-5 mt-3">
+  <div class="col">
+    <div *ngIf="admin" class="col-12">
+
+      {{"addbook:"+isAddBook}}
+      {{"- loading:"+loading}}
+      <p-button styleClass="px-4 p-button p-button-outlined p-button" (click)="showAddBook()">
+        <ng-template pTemplate="content">
+          <div class="icon-container__icon d-flex align-items-center fs-24 mt-1 fc-purple">
+            <fa-icon [icon]="faBook"></fa-icon>
+            <span class="ms-3 fm fs-18 fw-500 fc-purple">Add a book</span>
+          </div>
+        </ng-template>
+      </p-button>
+    </div>
+      
+  </div>
+  <div class="col-8">
+    <span class="p-input-icon-left w-100">
+      <i class="pi pi-search"></i>
+      <input class="w-100 p-inputtext-lg" type="text" pInputText placeholder="Search for a book name"
+        [formControl]="queryName" />
+    </span>
+  </div>
+  <div *ngIf="!admin" class="col-2"></div>
+</div>

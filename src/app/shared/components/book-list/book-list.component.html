@@ -1,0 +1,61 @@
+<dialogs *ngIf="!loading"></dialogs>
+<!-- <book-edit *ngIf="!loading" [visible]="isAddBook" [addBook]="true"  (onHide)="this.hideAddBook()"></book-edit> -->
+<!-- <book-edit *ngIf="!loading" [visible]="isAddBook" [addBook]="true" (added)="bookAdded($event)" (onHide)="this.hideAddBook()"></book-edit> -->
+<!--  -->
+<!-- <div class="row mb-5 mt-3">
+  <div class="col">
+    <div *ngIf="admin" class="col-12">
+      <p-button styleClass="px-4 p-button p-button-outlined p-button" (click)="showAddBook()">
+        <ng-template pTemplate="content">
+          <div class="icon-container__icon d-flex align-items-center fs-24 mt-1 fc-purple">
+            <fa-icon [icon]="faBook"></fa-icon>
+            <span class="ms-3 fm fs-18 fw-500 fc-purple">Add a book</span>
+          </div>
+        </ng-template>
+      </p-button>
+    </div>
+      
+  </div>
+  <div class="col-8">
+    <span class="p-input-icon-left w-100">
+      <i class="pi pi-search"></i>
+      <input class="w-100 p-inputtext-lg" type="text" pInputText placeholder="Search for a book name"
+        [formControl]="queryName" />
+    </span>
+  </div>
+  <div *ngIf="!admin" class="col-2"></div>
+</div> -->
+
+<!--  -->
+<p-toast></p-toast>
+
+<div *ngIf="hasBooks();else empty" class="row gy-4">
+  <div *ngFor="let book of books" class="col-3" style="height: 280px;">
+    <card-book [admin]="admin" [book]="book" [name]="book.name" [authors]="book.authors.toString()"
+      [summary]="book.summary" [year]="book.year" (refresh)="refresh($event)"></card-book>
+  </div>
+</div>
+
+<ng-template #empty>
+  <div *ngIf="loading; else noresults" class="row gy-4" style="min-height: 324px;">
+    <div class="hg-24 mt-0 align-center col-8 offset-2">
+      <span *ngIf="showSpecificMessage" class="fm fs-16 lh-16">Be more specific on your search</span>
+    </div>
+    <div *ngFor="let skl of [1,2,3,4,5,6,7,8]" class="col-3">
+      <card-book [skeleton]="true"></card-book>
+    </div>
+  </div>
+  <ng-template #noresults class="row gy-4">
+    <div class="col-12 d-flex flex-column align-items-center justify-content-center">
+      <span *ngIf="queryName;else nosearch" class="mt-4 fm fs-20">Your search <span *ngIf="queryName.length > 0" class="fw-500">"{{queryName}}"</span> did not match any Book names.</span>
+      <ng-template #nosearch >
+        <div class="d-flex flex-column">
+          <span class="mt-4 fm fs-20">Sorry, we do not have any book yet. =(</span>
+          <div class="align-self-center mt-5">
+            <img width="276px"height="400px"src="assets/img/sadbook.png" alt="Sad book">        
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</ng-template>

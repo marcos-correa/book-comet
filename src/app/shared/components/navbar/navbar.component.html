@@ -1,0 +1,13 @@
+
+
+
+<p-menubar styleClass="comet-navbar" [model]="menuItems">
+  <ng-template pTemplate="start">
+    <badge></badge>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <button *ngIf="isLogged" pButton type="button" icon="pi pi-sign-out" label="logout" iconPos="right" class="p-button-text p-button-outlined p-button-secondary fm fw-300" (click)="logout()"></button>
+    <button *ngIf="!isLogged" pButton type="button" icon="pi pi pi-user" label="login" iconPos="left" class="p-button-text p-button-outlined p-button-secondary fm fw-300" (click)="login()"></button>
+  </ng-template>
+</p-menubar>
+

@@ -1,0 +1,12 @@
+.make-classes(@prefix, @list, @field) {
+  .iter(length(@list));
+  .iter(@i) when (@i > 0) {
+      .iter(@i - 1);
+      @pair:  extract(@list, @i); 
+      @key: extract(@pair, 1);
+      @value: extract(@pair, 2); 
+      .@{prefix}-@{key} {
+          @{field}: @value !important;  
+      }
+  }
+}

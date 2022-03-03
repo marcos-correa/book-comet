@@ -1,0 +1,34 @@
+
+<navbar></navbar>
+<p-toast position="bottom-center"></p-toast>
+<div class="mb-5">
+  <carousel></carousel>
+</div>
+<div class="row">
+  <div class="col-8 offset-2">
+    <!-- <book-sear></book-sear> -->
+
+    <!-- [loading]="this.loading" -->
+    <book-search 
+      [admin]="false" 
+      (refresh_)="getAllBooks()"
+      (books_)="setBooksFiltered($event)"
+      (query_)="setQueryName($event)" 
+      (loading_)="setLoading($event)"
+    ></book-search>
+
+    {{"allboks.lgn: "+this.allBooks.length }}
+    {{" / queryNAme.lgn: "+this.queryName.length }}
+    <book-list 
+      [books]="getBooksToShow()" 
+      [loading]="this.loading" 
+      [error]="this.error" 
+      [queryName]="this.queryName" 
+      [admin]="false" 
+      [search]="true" 
+      (refresh_)="getAllBooks()"
+    ></book-list>
+
+
+  </div>
+</div>

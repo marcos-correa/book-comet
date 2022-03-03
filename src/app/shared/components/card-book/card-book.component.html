@@ -1,0 +1,37 @@
+<book-form [visible]="isBookEdit" [bookToEdit]="book" [addBook]="false" (onHide)="hideBookEdit()" (updated)="hasUpdatedBook($event)"></book-form>
+<div class="bcard">
+  <p-card styleClass="card-book">
+    <ng-template pTemplate="header">
+      <div class="d-flex h-100 align-items-center justify-content-around icon">
+        <div *ngIf="admin" class="icon-container-admin rounded-circle d-flex align-items-center ">
+            <button pButton pRipple (click)="showBookEdit()" type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"[ngStyle]="{color:'var(--surface-0)'}"></button>
+        </div>
+        <div class="icon-container rounded-circle d-flex align-items-center justify-content-center">
+          <div class="icon-container__icon fs-28 mt-1">
+            <fa-icon *ngIf="!skeleton"[icon]="faBook"></fa-icon>
+            <ngx-skeleton-loader *ngIf="skeleton" count="1" appearance="circle" [theme]="{height: '60px', width:'60px'}"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div *ngIf="admin" class="icon-container-admin rounded-circle d-flex align-items-center justify-content-center">
+          <button pButton pRipple (click)="deleteBook()" type="button" icon="pi pi-trash" class="p-button-rounded p-button-text" [ngStyle]="{color:'var(--surface-0)'}"></button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <div class="mt-4 p-0">
+        <p *ngIf="!skeleton" class="fm fw-500 fs-16 mb-2 text-center text-truncate" title="Name of the book: {{name}}">{{name}}</p>        
+        <p *ngIf="!skeleton" class="fm fw-300 fs-14 mb-3 text-uppercase text-center text-truncate" title="Author(s): {{authors}}">{{authors}}</p>
+        <span *ngIf="!skeleton" class="fm fs-12 lh-16 text_summary text-truncate"><span class="fw-500">Summary: </span>{{summary}}</span>
+        <ngx-skeleton-loader *ngIf="skeleton" count="3" appearance="line"></ngx-skeleton-loader>
+      </div>
+    </ng-template>
+    
+    <ng-template pTemplate="footer">
+      <div class="d-flex flex-end align-items-center ms-auto" title="Year of publication">
+        <span *ngIf="!skeleton" class="fm fs-13 lh-13 fw-300">{{year}}</span>
+        <ngx-skeleton-loader class="fm fw-300 d-flex flex-end ms-auto" *ngIf="skeleton" count="1" appearance="line"></ngx-skeleton-loader>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
