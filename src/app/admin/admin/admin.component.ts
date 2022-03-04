@@ -35,7 +35,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.getAllBooks()
   }
-
+  
   responses = () =>{
     return {
       next: this.hasResults,
@@ -47,7 +47,10 @@ export class AdminComponent implements OnInit {
   getAllBooks(){
     this.initSearch();
     this.bookService.getAllBooks()
-    .subscribe(this.responses)
+    .subscribe({
+      next: this.hasResults,
+      error: this.hasError
+    })
   }
   initSearch(){
     this.setAllBooks([])
@@ -63,9 +66,9 @@ export class AdminComponent implements OnInit {
     }
   }
 
-
-  showAddBook(){
-    this.isAddBook = true
+  hidedForm(){
+    this.isAddBook = false
+    this.getAllBooks()
   }
 
   //
