@@ -1,5 +1,5 @@
-<dialogs *ngIf="!loading"></dialogs>
 <p-toast></p-toast>
+<dialogs *ngIf="!loading"></dialogs>
 
 <div *ngIf="(!loading && hasBooks());else skeleton" class="row gy-4">
   <div *ngFor="let book of books" class="col-lg-3 col-md-4 col-sm-6" style="height: 280px;">

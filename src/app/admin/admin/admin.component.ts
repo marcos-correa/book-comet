@@ -1,11 +1,10 @@
-import { Bookout } from './../../core/models/bokout.model';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
-import { Bookin } from '../../core/models/bookin.model';
-import { DeleteResponse } from '../../core/models/deleteResponse.model';
+
+import { Bookout } from './../../core/models/bokout.model';
 import { AccountService } from './../../core/services/account.service';
 import { BookService } from './../../core/services/book.service';
 
@@ -36,7 +35,12 @@ export class AdminComponent implements OnInit {
     this.getAllBooks()
   }
   
-  getAllBooks(){
+  /**
+   * @method getAllBooks
+   * @description 
+   * A simple Observable search and default layout start
+   */
+  getAllBooks() {
     this.initSearch();
     this.bookService.getAllBooks()
     .subscribe({
@@ -44,13 +48,26 @@ export class AdminComponent implements OnInit {
       error: this.hasError
     })
   }
-  initSearch(){
+  
+  /**
+   * @method initSearch
+   * @description 
+   * Each new search, whether for all books or for books searched, sets these variables to default. 
+   * This generates the skeleton effect in the booklist component
+   */
+  initSearch() {
     this.setAllBooks([])
     this.setLoading(true);
   }
-  getBooksToShow(){
-    let allBoksToShow = this.allBooks.length > 0
-  
+
+  /**
+   * @method getBooksToShow
+   * @description 
+   * The main rule to show a search result or a main result that show allBooks
+   * If none returns, it sends an empty ARRAY, which is interpreted by the search component as no result.  
+   */
+  getBooksToShow() {
+    let allBoksToShow = this.allBooks.length > 0 && this.queryName.length <= 1
     if(allBoksToShow){
       return this.allBooks
     }else{
@@ -58,7 +75,11 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  hidedForm(){
+  /**
+   * @method hidedForm
+   * @description Each time of Hided Form generate a new search all books. 
+   */
+  hidedForm() {
     this.isAddBook = false
     this.getAllBooks()
   }
@@ -69,7 +90,7 @@ export class AdminComponent implements OnInit {
    * @param  {any} res
    * @description If has results, set allBooks results and stop loading value to dismiss the skeleton view
    */
-  hasResults = (res:any) =>{
+  hasResults = (res:any) => {
     this.setAllBooks(res);
     this.setLoading(false);
   }
@@ -79,7 +100,7 @@ export class AdminComponent implements OnInit {
    * @param  {any} err
    * @description If hasn't results, set error then will be show by card session and stop loading value to dismiss the skeleton view
    */
-  hasError = (err:any) =>{
+  hasError = (err:any) => {
     this.setError(true);
     this.setLoading(false);
   }
@@ -88,7 +109,7 @@ export class AdminComponent implements OnInit {
    * @method showAddBook
    * @description Only set true to isAddBook that show the book-form component in add mode
    */
-  showAddBook(){
+  showAddBook() {
     this.isAddBook = true
   }
   
@@ -97,7 +118,7 @@ export class AdminComponent implements OnInit {
    * @method 
    * @param  {Bookout[]} allBooks
    */
-  setAllBooks(allBooks:Bookout[]){
+  setAllBooks(allBooks:Bookout[]) {
     this.allBooks = allBooks
   }
 
@@ -115,7 +136,7 @@ export class AdminComponent implements OnInit {
    * @param  {string} queryName
    * @description An util method to set property of queryName 
    */
-  setQueryName(queryName:string){
+  setQueryName(queryName:string) {
     this.queryName = queryName
   }
 
@@ -133,7 +154,7 @@ export class AdminComponent implements OnInit {
    * @param  {boolean} value
    * @description An util method to set property of error
    */
-  setError(value:boolean){
+  setError(value:boolean) {
     this.error = value
   } 
 }

@@ -21,11 +21,15 @@ export class LoginComponent implements OnInit {
     private accountService:AccountService,
     private router:Router
   ) { }
-
   
   ngOnInit(): void {
   }
-
+  /**
+   * @method onSubmit
+   * @description 
+   * Only accepts a valid form to procced to succeeded login
+   * A particular example of a try-catch usage, non-functional.
+   */
   onSubmit(){
     if(!this.validForm){
       return
