@@ -53,7 +53,7 @@ export class NavbarComponent implements OnInit {
       if(!res) {
         this.showSuccess()
         this.hasLogged();
-        this.router.navigate([''])
+        this.router.navigate(['',{toast:true}])
       }
     })
   }
