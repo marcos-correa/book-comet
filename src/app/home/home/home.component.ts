@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 import { DeleteResponse } from '../../core/models/deleteResponse.model';
 import { Bookout } from './../../core/models/bokout.model';
@@ -8,86 +8,98 @@ import { BookService } from './../../core/services/book.service';
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.less']
+  styleUrls: ['./home.component.less'],
 })
 export class HomeComponent implements OnInit {
-  numberDelete?:number;
+  numberDelete?: number;
   responseDelete?: DeleteResponse;
   logged: boolean = true;
-  
-      
-  queryName:string = ''
+  needSpecifiMessage:boolean = false;
+
+  queryName: string = '';
   allBooks: Bookout[] = [];
   booksFiltered: Bookout[] = [];
-  loading: boolean = false; 
+  loading: boolean = false;
   error: boolean = false;
-  
-  
+
+  loggeded = true;
+  isAddBook: boolean = false;
 
   constructor(
-    private bookService:BookService,
-    // private messageService:MessageService
-  ) { 
-    
-
+    private bookService: BookService
+  ) // private messageService:MessageService
+  {}
+  showAddBook() {
+    this.isAddBook = true;
   }
-  
 
-  loggeded = true
   ngOnInit(): void {
-    this.getAllBooks()
+    this.getAllBooks();
   }
-  getAllBooks(){
+  getAllBooks() {
     this.initSearch();
-    this.bookService.getAllBooks()
-    .subscribe({
+    this.bookService.getAllBooks().subscribe({
       next: this.hasResults,
-      error: this.hasError,
-      complete: this.hasComplete
-    })
+      error: this.hasError
+    });
   }
-
-  initSearch(){
-    this.allBooks = []
+  initSearch() {
+    this.setAllBooks([]);
     this.setLoading(true);
   }
-  onError(value:string){  
-    alert(value)
+
+  onError(value: string) {
+    alert(value);
   }
 
-  hasResults = (res:any) =>{
-    this.allBooks = res;
+  hasResults = (res: any) => {
+    this.setAllBooks(res);
     this.setLoading(false);
+  };
+
+
+  delay(delay:number) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, delay);
+    });
+  }
+  async setSpecificMessage(){
+    this.needSpecifiMessage = false
+    let need = await this.delay(2500)
+    this.needSpecifiMessage = this.queryName.length == 1
   }
 
-  hasError = (err:any) =>{
+  hasError = (err: any) => {
     this.setError(true);
     this.setLoading(false);
-  }
+  };
 
-  hasComplete = () =>{
-    console.log('complete')
-  }
-
-  getBooksToShow(){
-    let allBoksToShow = this.allBooks.length > 0 && this.queryName.length <= 1
-  
-    if(allBoksToShow){
-      return this.allBooks
-    }else{
-      return this.booksFiltered || []
+  getBooksToShow() {
+    let allBoksToShow = this.allBooks.length > 0 && this.queryName.length <= 1;
+    if (allBoksToShow) {
+      return this.allBooks;
+    } else {
+      return this.booksFiltered || [];
     }
   }
+
   setBooksFiltered(value: Bookout[]) {
     this.booksFiltered = value;
   }
-  setQueryName(queryName:string){
-    this.queryName = queryName
+  setQueryName(queryName: string) {
+    this.queryName = queryName;
+    this.setSpecificMessage()
   }
   setLoading(value: boolean) {
     this.loading = value;
   }
-  setError(value:boolean){
-    this.error = value
+  setError(value: boolean) {
+    this.error = value;
   }
+  setAllBooks(books:Bookout[]){
+    this.allBooks = books
+  }
+
 }

@@ -2,7 +2,8 @@ import { Bookout } from './../../core/models/bokout.model';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
 import { Bookin } from '../../core/models/bookin.model';
 import { DeleteResponse } from '../../core/models/deleteResponse.model';
 import { AccountService } from './../../core/services/account.service';
@@ -14,16 +15,16 @@ import { BookService } from './../../core/services/book.service';
   styleUrls: ['./admin.component.less']
 })
 export class AdminComponent implements OnInit {
-  numberDelete?:number;
-  responseDelete?: DeleteResponse;
-  logged: boolean = true;
-
-  queryName:string = ''
+  isAddBook:boolean = false;
+  
   allBooks: Bookout[] = [];
   booksFiltered: Bookout[] = [];
+  queryName:string = ''
   loading: boolean = false; 
   error: boolean = false;
-
+  
+  faBook = faBook as IconProp;
+  
   constructor(
     private bookService:BookService,
     private accountService:AccountService,
@@ -32,20 +33,24 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.allBooks = this.bookService.allBooks
+    this.getAllBooks()
+  }
+
+  responses = () =>{
+    return {
+      next: this.hasResults,
+      error: this.hasError,
+      complete: this.hasComplete
+    }
   }
 
   getAllBooks(){
     this.initSearch();
     this.bookService.getAllBooks()
-    .subscribe({
-      next: this.hasResults,
-      error: this.hasError,
-      complete: this.hasComplete
-    })
+    .subscribe(this.responses)
   }
   initSearch(){
-    this.allBooks = []
+    this.setAllBooks([])
     this.setLoading(true);
   }
   getBooksToShow(){
@@ -57,6 +62,13 @@ export class AdminComponent implements OnInit {
       return this.booksFiltered || []
     }
   }
+
+
+  showAddBook(){
+    this.isAddBook = true
+  }
+
+  //
 
   hasResults = (res:any) =>{
     this.allBooks = res;
@@ -72,6 +84,12 @@ export class AdminComponent implements OnInit {
     console.log('complete')
   }
 
+
+  // SettersComponent
+
+  setAllBooks(allBooks:Bookout[]){
+    this.allBooks = allBooks
+  }
   setBooksFiltered(value: Bookout[]) {
     this.booksFiltered = value;
   }
@@ -81,7 +99,6 @@ export class AdminComponent implements OnInit {
   setLoading(value: boolean) {
     this.loading = value;
   }
- 
   setError(value:boolean){
     this.error = value
   }

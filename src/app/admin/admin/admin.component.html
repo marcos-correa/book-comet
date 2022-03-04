@@ -1,23 +1,51 @@
 <navbar></navbar>
-<div class="row">
-  <div class="col-8 offset-2">
-    <book-search 
-      [admin]="true"
-      [loading]="this.loading"
-      (refresh_)="getAllBooks()"
-      (books_)="setBooksFiltered($event)"
-      (query_)="setQueryName($event)" 
-      (loading_)="setLoading($event)"
-    ></book-search>
 
+<book-form *ngIf="!loading" [visible]="isAddBook" [addBook]="true" (onHide)="isAddBook = false"></book-form>
+
+<div class="row mt-5">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 offset-xl-2">
+    
+    <div class="row">
+      <div class="col-sm-12 col-md-3 col-xl-3">
+        <p-button styleClass="px-4 w-100 mt-3 p-button p-button-outlined p-button" (click)="showAddBook()">
+          <ng-template pTemplate="content">
+            <div class="icon-container__icon d-flex align-items-center fs-24 mt-1 fc-purple">
+              <fa-icon [icon]="faBook"></fa-icon>
+              <span class="ms-3 fm fs-18 fw-500 fc-purple">Add a book</span>
+            </div>
+          </ng-template>
+        </p-button>
+      </div>
+
+      <div class="col-sm-12 col-md-9 col-xl-9 mt-3">
+        <book-search 
+          [loading]="this.loading" 
+          (refresh_)="getAllBooks()"
+          (books_)="setBooksFiltered($event)" 
+          (query_)="setQueryName($event)" 
+          (loading_)="setLoading($event)"
+        ></book-search>
+      </div>
+    </div>
+
+    <div class="my-3 hg-20 d-flex align-items-center">
+    </div>
     <book-list 
       [books]="getBooksToShow()" 
       [loading]="this.loading" 
       [error]="this.error" 
-      [queryName]="this.queryName" 
+      [queryName]="this.queryName"
       [admin]="true" 
-      [search]="true"
+      [search]="true" 
       (refresh_)="this.getAllBooks()"
     ></book-list>
+  
+    <book-list-not-found
+      [admin]="true"
+      [notfound]="!loading && booksFiltered.length == 0 && this.queryName.length >= 2"
+      [nobooks]="!loading && this.allBooks.length == 0"
+      [queryName]="this.queryName"
+    ></book-list-not-found>
+ 
   </div>
 </div>

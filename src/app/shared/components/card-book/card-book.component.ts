@@ -34,8 +34,6 @@ export class CardBookComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.book = JSON.parse(JSON.stringify(this.book))
-    
   }
 
   deleteBook(){

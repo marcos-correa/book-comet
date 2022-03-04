@@ -1,0 +1,9 @@
+<div class="row vh-100 justify-content-center align-items-center">
+  <div class="col-sm-10 col-lg-6">
+    <div class="card login p-5">
+      <badge [size]="'md'" class="mb-5"></badge>
+      <login-form class="mb-5" (valid)="showValid($event)"></login-form>
+      <p-button [disabled]="!validForm" label="Login" styleClass="p-button-lg w-100 fm" (click)="onSubmit()"></p-button>
+    </div>
+  </div>
+</div>

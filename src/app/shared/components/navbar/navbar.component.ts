@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
       if(this.isLogged){
         this.router.navigate(['/admin'])
       }else{ 
-        this.messageService.add({severity:'warning', summary: 'Login needed', detail: `You must be logged in to access Admin panel`});
+        this.messageService.add({severity:'warn', summary: 'Login needed', detail: `You must be logged in to access Admin panel`});
       }
     }, }
     this.menuItems = MENUS;
@@ -37,6 +37,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.hasLogged();
   }
+
   hasLogged(){
     this.accountService.hasLogged().then(res=> {
       if(!res){
@@ -46,15 +47,18 @@ export class NavbarComponent implements OnInit {
       }
     })
   }
+
   logout(){
     this.accountService.logout().then(res=>{
       if(!res) {
+        this.showSuccess()
         this.hasLogged();
         this.router.navigate([''])
-      }else{
-        alert('ok')
       }
     })
+  }
+  showSuccess() {
+    this.messageService.add({severity:'success', summary: 'You logged out', detail: `When you come back, bring me a coffee. =P`});
   }
 
   login(){

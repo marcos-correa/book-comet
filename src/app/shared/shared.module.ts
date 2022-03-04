@@ -28,6 +28,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SearchComponent } from './components/search/search.component';
 import { BookSearchComponent } from './components/book-search/book-search.component';
+import { BookListNotFoundComponent } from './components/book-list-not-found/book-list-not-found.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { BookSearchComponent } from './components/book-search/book-search.compon
     CarouselComponent,
     BadgeComponent,
     BookSearchComponent,
+    BookListNotFoundComponent,
   ],
   imports: [
     CommonModule,
@@ -83,6 +85,8 @@ import { BookSearchComponent } from './components/book-search/book-search.compon
     BadgeComponent,
     ToastModule,
     BookSearchComponent,
+    BookFormComponent,
+    BookListNotFoundComponent,
   ],
   providers:[
     ConfirmationService,

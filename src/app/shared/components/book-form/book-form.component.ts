@@ -1,10 +1,9 @@
-import { Bookin } from '../../../core/models/bookin.model';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { BookService } from 'src/app/core/services/book.service';
+
 import { Bookout } from '../../../core/models/bokout.model';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import * as _ from 'lodash';
-import { JsonpClientBackend } from '@angular/common/http';
+import { Bookin } from '../../../core/models/bookin.model';
 
 
 @Component({
@@ -12,7 +11,7 @@ import { JsonpClientBackend } from '@angular/common/http';
   templateUrl: './book-form.component.html',
   styleUrls: ['./book-form.component.less']
 })
-export class BookFormComponent implements OnInit, OnChanges,OnDestroy {
+export class BookFormComponent implements OnInit, OnChanges {
   @Input() bookToEdit!: Bookout;
   @Input() visible: boolean = false;
   @Input() addBook: boolean = false;
@@ -23,19 +22,18 @@ export class BookFormComponent implements OnInit, OnChanges,OnDestroy {
   newBook:Bookout = this.getDeFaultBook();
   oldBook:Bookout = this.getDeFaultBook();
 
-  hasOldBook=false;
+  hasOldBook:boolean = false;
   isDisabledButton:boolean = false;
 
   submitted: boolean = false;
+  
   constructor(
-    private confirmationService:ConfirmationService,
     private bookService:BookService,
     private messageService: MessageService
   ) { }
-  
 
   ngOnInit(): void {
-
+    this.getOldBook()
   }
   
   hideDialog(){
@@ -57,12 +55,14 @@ export class BookFormComponent implements OnInit, OnChanges,OnDestroy {
   aboveYear(value:any){
     return value > 2022
   }
+
   addABook(book:Bookin){
     this.bookService.postBook(book).subscribe({
       next: (res:any) => {
+        this.showSuccess(res,'add')
         this.added.emit(res)
       },
-      error: (err:any) => {console.log(err)}
+      error: (err:any) => {this.showError(err)}
     })
   }
 
@@ -70,20 +70,28 @@ export class BookFormComponent implements OnInit, OnChanges,OnDestroy {
     let id = this.newBook.id
     this.bookService.updateBook(id,book).subscribe({
       next: (res:any) =>{
-        // this.showSuccess(res.name)
-        this.messageService.add({severity:'success', summary: 'Success', detail: `The book ${res.name} was updated`});
-
-        this.updated.emit(res);
+        this.showSuccess(res,'upd')
       },
       error: (err) =>{
-        console.log(err)
-        this.onHide.emit(true)
+        this.showError(err)
       }
     })
   }
 
-  showSuccess(name:string) {
-    this.messageService.add({severity:'success', summary: 'Book posted', detail: `The book ${name} has been updated`});
+  showSuccess(res:any,type:string) {
+    if(type=='add'){
+      this.messageService.add({severity:'success', summary: 'Book added', detail: `The book ${res.name} has been added`});
+    }
+    if(type=='upd'){
+      this.messageService.add({severity:'success', summary: 'Book updated', detail: `The book ${res.name} has been updated`});
+    }
+    this.updated.emit(res)
+    this.onHide.emit(true)
+  }
+  
+  showError(err:any){
+    this.messageService.add({severity:'warn', summary: 'Oops', detail: `Generic failed`});
+    this.onHide.emit(true)
   }
 
   setBookToSave(): Bookin{
@@ -110,11 +118,6 @@ export class BookFormComponent implements OnInit, OnChanges,OnDestroy {
     };
     return JSON.parse(JSON.stringify(_default))
   }
-  ngOnDestroy(){
-
-  }
-
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['bookToEdit'] && changes['bookToEdit'].currentValue && !this.addBook){

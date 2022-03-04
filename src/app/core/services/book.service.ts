@@ -18,12 +18,7 @@ export class BookService {
   private readonly prodApi = "https://fumt-api.herokuapp.com/book/"
   private filterString: Subject<string> = new Subject<string>();
 
-  responses = {
-    complete: () => console.info('complete'),
-    next: (v:any) => console.log('NEXT',v),
-    error: (err:any) => console.log('ERROR',err)
-  }
-
+  
   constructor(
     private httpClient:HttpClient
     ) { 
