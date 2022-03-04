@@ -1,13 +1,13 @@
 <navbar></navbar>
 
-<book-form *ngIf="!loading" [visible]="isAddBook" [addBook]="true" (onHide)="isAddBook = false"></book-form>
+<book-form *ngIf="!loading" [visible]="isAddBook" [addBook]="true" (onHide)="hidedForm()"></book-form>
 
 <div class="row mt-5">
   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8 offset-xl-2">
     
     <div class="row">
-      <div class="col-sm-12 col-md-3 col-xl-3">
-        <p-button styleClass="px-4 w-100 mt-3 p-button p-button-outlined p-button" (click)="showAddBook()">
+      <div class="col-sm-12 col-md-4 col-xl-4">
+        <p-button styleClass="px-4 w-100 mt-3 p-button p-button-outlined p-button d-flex justify-content-center" (click)="showAddBook()">
           <ng-template pTemplate="content">
             <div class="icon-container__icon d-flex align-items-center fs-24 mt-1 fc-purple">
               <fa-icon [icon]="faBook"></fa-icon>
@@ -17,7 +17,7 @@
         </p-button>
       </div>
 
-      <div class="col-sm-12 col-md-9 col-xl-9 mt-3">
+      <div class="col-sm-12 col-md-8 col-xl-8 mt-3">
         <book-search 
           [loading]="this.loading" 
           (refresh_)="getAllBooks()"
