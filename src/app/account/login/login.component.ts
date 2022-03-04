@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
-import { AccountService } from './../../core/services/account.service';
+import { AccountService } from '../../core/services/account.service';
 import { Component, OnInit } from '@angular/core';
+import { AccountModel } from 'src/app/core/models/account.model';
 
 @Component({
   selector: 'login',
@@ -8,21 +9,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
-  login = {
-    email: "",
-    password:""
+  
+  validForm:boolean = false;
+  login:AccountModel = {
+    password:'',
+    username:''
   }
 
-  validForm:boolean = false;
 
   constructor(
     private accountService:AccountService,
     private router:Router
   ) { }
 
+  
   ngOnInit(): void {
   }
+
   onSubmit(){
+    if(!this.validForm){
+      return
+    }
     try {
       const result = this.accountService.login(this.login);
       console.log(`login succeeded: ${result}`);
@@ -31,7 +38,8 @@ export class LoginComponent implements OnInit {
       console.error(error);
     }
   }
-  showValid(value:any){
+  
+  showValid(value:boolean): void{
     this.validForm = value 
   }
 }

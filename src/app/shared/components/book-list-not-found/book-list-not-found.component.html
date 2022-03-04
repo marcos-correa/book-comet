@@ -1,0 +1,14 @@
+<div class="col-12 d-flex flex-column align-items-center justify-content-center">
+  <span *ngIf="notfound"class="mt-4 fm fs-20">
+    Your search
+    <span *ngIf="queryName.length > 0" class="fw-500">"{{queryName}}"</span>
+    did not match any Book names.  
+  </span>
+  <div *ngIf="nobooks" class="d-flex flex-column">
+    <span *ngIf="!admin" class="fm fs-20">Sorry, we do not have any book yet. =(</span>
+    <div *ngIf="!admin" class="align-self-center mt-4">
+      <img width="276px" height="400px" src="assets/img/sadbook.png" alt="Sad book">
+    </div>
+    <span *ngIf="admin" class="mt-4 fm fs-20">C'mon, add a beautiful Book. They're waiting. =)</span>
+  </div>
+</div>

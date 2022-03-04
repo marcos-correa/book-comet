@@ -1,9 +1,9 @@
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from './../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AuthRoutingModule } from './auth-routing.module';
+import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from './login/login.component';
 
 
@@ -14,8 +14,8 @@ import { LoginComponent } from './login/login.component';
   imports: [
     FormsModule,
     CommonModule,
-    AuthRoutingModule,
+    AccountRoutingModule,
     SharedModule
   ]
 })
-export class AuthModule { }
+export class AccountModule { }

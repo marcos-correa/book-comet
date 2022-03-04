@@ -17,7 +17,7 @@ export class BookListComponent implements OnInit {
   @Input() search:boolean = true;
   @Input() queryName:string = "";
   @Input() books:Bookout[] = [];
-  @Input() loading:boolean = true;
+  @Input() loading:boolean = false;
   @Input() error:boolean = true;
   @Output() refresh_: EventEmitter<any> = new EventEmitter()
 

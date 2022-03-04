@@ -7,7 +7,6 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
   },
-  // canActivate:[AuthGuard]
   {
     path:'',
     redirectTo:'login',
@@ -15,14 +14,12 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
   },
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
   },
-  // canActivate:[AuthGuard]
-  
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),

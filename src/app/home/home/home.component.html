@@ -1,33 +1,42 @@
 
 <navbar></navbar>
-<p-toast position="bottom-center"></p-toast>
+<book-form *ngIf="!loading" [visible]="isAddBook" [addBook]="false" (onHide)="isAddBook = false"></book-form>
+
+
 <div class="mb-5">
   <carousel></carousel>
 </div>
 <div class="row">
-  <div class="col-8 offset-2">
-    <!-- <book-sear></book-sear> -->
+  <div class="col-sm-12 col-md-12 col-lg-8 offset-lg-2">
 
-    <!-- [loading]="this.loading" -->
+    
     <book-search 
-      [admin]="false" 
       (refresh_)="getAllBooks()"
-      (books_)="setBooksFiltered($event)"
-      (query_)="setQueryName($event)" 
       (loading_)="setLoading($event)"
+      (books_)="setBooksFiltered($event)"
+      (query_)="setQueryName($event)"
     ></book-search>
 
-    {{"allboks.lgn: "+this.allBooks.length }}
-    {{" / queryNAme.lgn: "+this.queryName.length }}
+    <div class="my-3 hg-20 d-flex align-items-center">
+      <span *ngIf="needSpecifiMessage" class="fm fs-16 lh-16">Be more specific on your search, you can do it.</span>
+    </div>
+
     <book-list 
+      [loading]="this.loading || this.queryName.length == 1" 
       [books]="getBooksToShow()" 
-      [loading]="this.loading" 
       [error]="this.error" 
       [queryName]="this.queryName" 
       [admin]="false" 
       [search]="true" 
       (refresh_)="getAllBooks()"
     ></book-list>
+
+    <book-list-not-found
+      [admin]="false"
+      [notfound]="!loading && booksFiltered.length == 0 && this.queryName.length >= 2"
+      [nobooks]="!loading && this.allBooks.length == 0"
+      [queryName]="this.queryName"
+    ></book-list-not-found>
 
 
   </div>
