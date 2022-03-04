@@ -39,6 +39,13 @@ export class LoginComponent implements OnInit {
     }
   }
   
+  
+  /**
+   * @method showValid
+   * @param  {boolean} value
+   * @returns void
+   * @description Valid the form to proceed to logged in. The requirements is only if exists values on login properties 
+   */
   showValid(value:boolean): void{
     this.validForm = value 
   }

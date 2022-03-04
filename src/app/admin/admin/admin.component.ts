@@ -36,14 +36,6 @@ export class AdminComponent implements OnInit {
     this.getAllBooks()
   }
   
-  responses = () =>{
-    return {
-      next: this.hasResults,
-      error: this.hasError,
-      complete: this.hasComplete
-    }
-  }
-
   getAllBooks(){
     this.initSearch();
     this.bookService.getAllBooks()
@@ -72,39 +64,78 @@ export class AdminComponent implements OnInit {
   }
 
   //
-
+  /**
+   * @method hasResults
+   * @param  {any} res
+   * @description If has results, set allBooks results and stop loading value to dismiss the skeleton view
+   */
   hasResults = (res:any) =>{
-    this.allBooks = res;
+    this.setAllBooks(res);
     this.setLoading(false);
   }
-
+  
+  /**
+   * @method hasError
+   * @param  {any} err
+   * @description If hasn't results, set error then will be show by card session and stop loading value to dismiss the skeleton view
+   */
   hasError = (err:any) =>{
     this.setError(true);
     this.setLoading(false);
   }
 
-  hasComplete = () =>{
-    console.log('complete')
+  /**
+   * @method showAddBook
+   * @description Only set true to isAddBook that show the book-form component in add mode
+   */
+  showAddBook(){
+    this.isAddBook = true
   }
-
-
-  // SettersComponent
-
+  
+  //--- SettersComponent
+  /**
+   * @method 
+   * @param  {Bookout[]} allBooks
+   */
   setAllBooks(allBooks:Bookout[]){
     this.allBooks = allBooks
   }
+
+  /**
+   * @method setBooksFiltered 
+   * @param  {Bookout[]} value
+   * @description An util method to set property of booksFiltered 
+   */
   setBooksFiltered(value: Bookout[]) {
     this.booksFiltered = value;
   }
+
+  /**
+   * @method setQueryName 
+   * @param  {string} queryName
+   * @description An util method to set property of queryName 
+   */
   setQueryName(queryName:string){
     this.queryName = queryName
   }
+
+  /**
+   * @method setLoading 
+   * @param  {boolean} value
+   * @description An util method to set property of loading 
+   */
   setLoading(value: boolean) {
     this.loading = value;
   }
+
+  /**
+   * @method setError 
+   * @param  {boolean} value
+   * @description An util method to set property of error
+   */
   setError(value:boolean){
     this.error = value
-  }
+  } 
 }
 
 
