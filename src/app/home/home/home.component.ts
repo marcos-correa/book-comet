@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   booksFiltered: Bookout[] = [];
   loading: boolean = false;
   error: boolean = false;
+  errorData: any = "";
 
   loggeded = true;
   isAddBook: boolean = false;
@@ -60,6 +61,7 @@ export class HomeComponent implements OnInit {
   initSearch() {
     this.setAllBooks([]);
     this.setLoading(true);
+    this.setError(false)
   }
   /**
    * @method onError
@@ -67,8 +69,14 @@ export class HomeComponent implements OnInit {
    * @description 
    * Ero visualization pattern using a Toast service
    */
-  onError(err: string) {
-    this.messageService.add({severity:'error', summary: 'Oops', detail: `An error ocurred: ${err}`});
+  onError(err: any) {
+    this.setError(true)
+    this.setErrorData(err)
+    if(err.status && err.status == 500){
+      this.messageService.add({severity:'error', summary: 'Oops', detail: `An error ocurred: ${err.statusText}`});
+    }else{
+      this.messageService.add({severity:'error', summary: 'Oops', detail: `An error ocurred`});
+    }
   }
 
   hasResults = (res: any) => {
@@ -166,13 +174,20 @@ export class HomeComponent implements OnInit {
     this.error = value;
   }
 
+  setErrorData(err:any){
+    this.errorData = err
+  }
+
   /**
   * @method setAllBooks 
   * @param  {boolean} value
   * @description An util method to set property of ALLBOOKS
   */
   setAllBooks(books:Bookout[]){
+    this.setError(false)
     this.allBooks = books
   }
+
+  
 
 }

@@ -47,13 +47,15 @@ export class BookSearchComponent implements OnInit {
         switchMap(this.getAllBooksByName)
       ).subscribe({
         next: this.hasResults,
-        error: this.hasError
+        error: this.hasError,
+        complete: this.hasComplete
       });
   }
 
   getAllBooksByName = (value:any) =>{
     return this.bookService.getAllBooksByName(value)
   }
+  hasComplete = () =>{}
 
   hasResults = (res:any) =>{
     this.books_.emit(res)

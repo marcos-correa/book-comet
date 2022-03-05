@@ -15,6 +15,7 @@
       (loading_)="setLoading($event)"
       (books_)="setBooksFiltered($event)"
       (query_)="setQueryName($event)"
+      (error_)="onError($event)"
     ></book-search>
 
     <div class="my-3 hg-20 d-flex align-items-center">
@@ -22,20 +23,21 @@
     </div>
 
     <book-list 
-      [loading]="this.loading || this.queryName.length == 1" 
+      [loading]="loading || queryName.length == 1" 
       [books]="getBooksToShow()" 
-      [error]="this.error" 
-      [queryName]="this.queryName" 
+      [error]="error" 
+      [queryName]="queryName" 
       [admin]="false" 
       [search]="true" 
       (refresh_)="getAllBooks()"
     ></book-list>
-
+    
     <book-list-not-found
       [admin]="false"
-      [notfound]="!loading && booksFiltered.length == 0 && this.queryName.length >= 2"
-      [nobooks]="!loading && this.allBooks.length == 0"
-      [queryName]="this.queryName"
+      [notfound]="!loading && booksFiltered.length == 0 && queryName.length >= 2 && !error"
+      [nobooks]="!loading && allBooks.length == 0"
+      [queryName]="queryName"
+      [errorData]="errorData"
     ></book-list-not-found>
 
 

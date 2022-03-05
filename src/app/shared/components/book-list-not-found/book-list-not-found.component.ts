@@ -12,6 +12,7 @@ export class BookListNotFoundComponent implements OnInit {
   @Input() notfound:boolean = false
   @Input() nobooks:boolean = false
   @Input() queryName:string = ""
+  @Input() errorData:any = ""
   
   constructor(
     private bookService:BookService
@@ -21,6 +22,13 @@ export class BookListNotFoundComponent implements OnInit {
   addedMockBook = false
 
   ngOnInit(): void {
+  }
+
+  hasInternalError(){
+    if(this.errorData.status == 50){
+      return true
+    }
+    return false
   }
 
   addMockBook(){
