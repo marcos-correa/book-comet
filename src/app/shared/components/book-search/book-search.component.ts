@@ -28,7 +28,6 @@ export class BookSearchComponent implements OnInit {
   @Output() loading_: EventEmitter<any> = new EventEmitter()
   @Output() refresh_: EventEmitter<any> = new EventEmitter()
 
-  // loading: boolean = false;
   queryName:FormControl = new FormControl()//BS
 
   constructor(

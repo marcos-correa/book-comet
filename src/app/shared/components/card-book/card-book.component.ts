@@ -56,6 +56,7 @@ export class CardBookComponent implements OnInit {
     })
 
   }
+  
   showBookEdit(){
     this.isBookEdit = true;
   }

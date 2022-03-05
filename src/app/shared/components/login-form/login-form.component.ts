@@ -24,6 +24,7 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   changedAny(){
     if(this.login.email && this.login.password){
       this.valid.emit(true)
