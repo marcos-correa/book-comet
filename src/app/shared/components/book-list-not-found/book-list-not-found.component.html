@@ -9,6 +9,6 @@
     <div *ngIf="!admin" class="align-self-center mt-4">
       <img width="276px" height="400px" src="assets/img/sadbook.png" alt="Sad book">
     </div>
-    <span *ngIf="admin" class="mt-4 fm fs-20">C'mon, add a beautiful Book. They're waiting. =)</span>
+    <span *ngIf="admin" class="mt-4 fm fs-20">C'mon, add a beautiful <span (click)="addMockBook()">Book</span>. They're waiting. =)</span>
   </div>
 </div>
