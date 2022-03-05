@@ -22,10 +22,6 @@ export class BookListComponent implements OnInit {
   @Output() refresh_: EventEmitter<any> = new EventEmitter()
 
   searched: boolean = false;
-  // loading: boolean = false;
-  // error: boolean = false;
-  // queryName:FormControl = new FormControl()//BS
-  // books:Bookout[] = [];
   faBook = faBook as IconProp;//BS
   searchLength:number = 0//BS
 
@@ -44,6 +40,7 @@ export class BookListComponent implements OnInit {
   showAddBook(){
     this.isAddBook = true
   }
+
   specifiMessageSet(){
     let rule_0 = this.searchLength == 0 && this.loading && this.books.length == 0;
     if(this.searchLength == 1){
@@ -66,12 +63,10 @@ export class BookListComponent implements OnInit {
     }
   }
 
-
   refresh(event:any){
     this.loading = true
     this.refresh_.emit(true)
   }
- 
   
   hasBooks(books?:Array<any>){
     return this.books.length > 0 
@@ -82,6 +77,7 @@ export class BookListComponent implements OnInit {
       this.initSearch()    
     }
   }
+
   initSearch(){
     this.books = []
     this.loading = true;

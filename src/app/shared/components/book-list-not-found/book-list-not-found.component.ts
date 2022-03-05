@@ -1,3 +1,5 @@
+import { BOOKS } from './../../../core/mocks/books';
+import { BookService } from 'src/app/core/services/book.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -10,9 +12,27 @@ export class BookListNotFoundComponent implements OnInit {
   @Input() notfound:boolean = false
   @Input() nobooks:boolean = false
   @Input() queryName:string = ""
-  constructor() { }
+  
+  constructor(
+    private bookService:BookService
+    ) { }
+    
+  mockBoocks = BOOKS
+  addedMockBook = false
 
   ngOnInit(): void {
   }
 
+  addMockBook(){
+    if(!this.addedMockBook){
+      this.addedMockBook = true
+      this.mockBoocks.forEach(book=>{
+        setTimeout(() => {
+          this.bookService.postBook(book).subscribe(res =>{
+            console.log(res)
+          })
+        }, 3000);
+      })
+    }
+  }
 }
